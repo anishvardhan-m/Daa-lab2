@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DAA Lab Programs — Internal-2</title><style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#0b1020;color:#e5eaf5;font:15px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:1040px;margin:auto;padding:36px 18px}h1{font-size:clamp(28px,5vw,44px);margin:0}h2{font-size:22px;margin:0}p{color:#aab6cd}.subtitle{margin:4px 0 25px}.nav{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 30px}.nav a,.btn{background:#1b2945;color:#e8f1ff;border:1px solid #344766;border-radius:9px;padding:9px 12px;text-decoration:none;cursor:pointer;font:inherit}.nav a:hover,.btn:hover{background:#2b4066}.program{background:#111a2d;border:1px solid #2b3b55;border-radius:16px;padding:22px;margin:22px 0}.heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.code{background:#080d18;color:#cde8e3;border:1px solid #26344a;border-radius:10px;padding:16px;overflow:auto;max-height:620px;font:13px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre;tab-size:4}.examples{display:grid;grid-template-columns:1fr 1fr;gap:14px}.examples pre{background:#080d18;border-radius:9px;padding:13px;overflow:auto;font-size:12px;white-space:pre-wrap}.tag{font-size:12px;color:#91a6c9}.footer{margin:35px 0;color:#8291aa}@media(max-width:650px){.examples{grid-template-columns:1fr}.program{padding:14px}.wrap{padding:24px 12px}}</style></head><body><main class="wrap"><h1>DAA Lab Programs</h1><p class="subtitle">PC653CS · Internal-2 · 5 programs in C</p><button class="btn" onclick="copyAll(this)">Copy all</button><nav class="nav"><a href="#p1">1) Topological Sorting</a><a href="#p2">2) Dijkstra&#x27;s Algorithm</a><a href="#p3">3) Floyd&#x27;s Algorithm</a><a href="#p4">4) N-Queens using Backtracking</a><a href="#p5">5) Travelling Salesperson (TSP) using DP</a></nav><section class="program" id="p1"><div class="heading"><h2>1) Topological Sorting</h2><button class="btn" onclick="copyCode('code1',this)">Copy</button></div><p class="tag">Lab manual pp. 9–11; cycle detection added.</p><pre class="code" id="code1">#include &lt;stdio.h&gt;
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DAA Lab Programs — Internal-2</title><style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#0b1020;color:#e5eaf5;font:15px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:1040px;margin:auto;padding:36px 18px}h1{font-size:clamp(28px,5vw,44px);margin:0}h2{font-size:22px;margin:0}p{color:#aab6cd}.subtitle{margin:4px 0 25px}.nav{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 30px}.nav a,.btn{background:#1b2945;color:#e8f1ff;border:1px solid #344766;border-radius:9px;padding:9px 12px;text-decoration:none;cursor:pointer;font:inherit}.nav a:hover,.btn:hover{background:#2b4066}.program{background:#111a2d;border:1px solid #2b3b55;border-radius:16px;padding:22px;margin:22px 0}.heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.code{background:#080d18;color:#cde8e3;border:1px solid #26344a;border-radius:10px;padding:16px;overflow:auto;max-height:620px;font:13px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre;tab-size:4}.examples{display:grid;grid-template-columns:1fr 1fr;gap:14px}.examples pre{background:#080d18;border-radius:9px;padding:13px;overflow:auto;font-size:12px;white-space:pre-wrap}.tag{font-size:12px;color:#91a6c9}.footer{margin:35px 0;color:#8291aa}@media(max-width:650px){.examples{grid-template-columns:1fr}.program{padding:14px}.wrap{padding:24px 12px}}</style></head><body><main class="wrap"><h1>DAA Lab Programs</h1><p class="subtitle">PC653CS · Internal-2 · 5 programs in C</p><button class="btn" aria-live="polite" onclick="copyAll(this)">Copy all</button><nav class="nav"><a href="#p1">1) Topological Sorting</a><a href="#p2">2) Dijkstra&#x27;s Algorithm</a><a href="#p3">3) Floyd&#x27;s Algorithm</a><a href="#p4">4) N-Queens using Backtracking</a><a href="#p5">5) Travelling Salesperson (TSP) using DP</a></nav><section class="program" id="p1"><div class="heading"><h2>1) Topological Sorting</h2><button class="btn" aria-live="polite" onclick="copyCode('code1',this)">Copy</button></div><p class="tag">Lab manual pp. 9–11; cycle detection added.</p><pre class="code" id="code1">#include &lt;stdio.h&gt;
 int a[20][20], n, indegree[20];
 
 void topology()
@@ -50,7 +50,7 @@ int main()
 0 0 0 1
 0 0 0 1
 0 0 0 0</pre></div><div><strong>Expected output</strong><pre>Topological sequence:
-1 3 2 4</pre></div></div></section><section class="program" id="p2"><div class="heading"><h2>2) Dijkstra&#x27;s Algorithm</h2><button class="btn" onclick="copyCode('code2',this)">Copy</button></div><p class="tag">Lab manual pp. 14–16; corrected source initialization and disconnected graph handling. Nonnegative weights only.</p><pre class="code" id="code2">#include &lt;stdio.h&gt;
+1 3 2 4</pre></div></div></section><section class="program" id="p2"><div class="heading"><h2>2) Dijkstra&#x27;s Algorithm</h2><button class="btn" aria-live="polite" onclick="copyCode('code2',this)">Copy</button></div><p class="tag">Lab manual pp. 14–16; corrected source initialization and disconnected graph handling. Nonnegative weights only.</p><pre class="code" id="code2">#include &lt;stdio.h&gt;
 #define INF 99999
 int main()
 {
@@ -104,7 +104,7 @@ int main()
 1</pre></div><div><strong>Expected output</strong><pre>Shortest distances:
 1 -&gt; 2: 2
 1 -&gt; 3: 5
-1 -&gt; 4: 6</pre></div></div></section><section class="program" id="p3"><div class="heading"><h2>3) Floyd&#x27;s Algorithm</h2><button class="btn" onclick="copyCode('code3',this)">Copy</button></div><p class="tag">Lab manual pp. 20–22; simplified matrix input, same Floyd recurrence.</p><pre class="code" id="code3">#include &lt;stdio.h&gt;
+1 -&gt; 4: 6</pre></div></div></section><section class="program" id="p3"><div class="heading"><h2>3) Floyd&#x27;s Algorithm</h2><button class="btn" aria-live="polite" onclick="copyCode('code3',this)">Copy</button></div><p class="tag">Lab manual pp. 20–22; simplified matrix input, same Floyd recurrence.</p><pre class="code" id="code3">#include &lt;stdio.h&gt;
 #define INF 99999
 int main()
 {
@@ -136,7 +136,7 @@ int main()
 3 99999 0</pre></div><div><strong>Expected output</strong><pre>All-pairs shortest distances:
 0 4 6
 5 0 2
-3 7 0</pre></div></div></section><section class="program" id="p4"><div class="heading"><h2>4) N-Queens using Backtracking</h2><button class="btn" onclick="copyCode('code4',this)">Copy</button></div><p class="tag">Lab manual pp. 6–7; equivalent formatted version.</p><pre class="code" id="code4">#include &lt;stdio.h&gt;
+3 7 0</pre></div></div></section><section class="program" id="p4"><div class="heading"><h2>4) N-Queens using Backtracking</h2><button class="btn" aria-live="polite" onclick="copyCode('code4',this)">Copy</button></div><p class="tag">Lab manual pp. 6–7; equivalent formatted version.</p><pre class="code" id="code4">#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 int x[20], count = 0;
 int place(int k, int i)
@@ -189,7 +189,7 @@ Q * * *
 * * * Q
 * Q * *
 
-Total solutions = 2</pre></div></div></section><section class="program" id="p5"><div class="heading"><h2>5) Travelling Salesperson (TSP) using DP</h2><button class="btn" onclick="copyCode('code5',this)">Copy</button></div><p class="tag">Supplemental implementation: manual p. 24 lists TSP but does not provide code. Complete directed cost matrix assumed.</p><pre class="code" id="code5">#include &lt;stdio.h&gt;
+Total solutions = 2</pre></div></div></section><section class="program" id="p5"><div class="heading"><h2>5) Travelling Salesperson (TSP) using DP</h2><button class="btn" aria-live="polite" onclick="copyCode('code5',this)">Copy</button></div><p class="tag">Supplemental implementation: manual p. 24 lists TSP but does not provide code. Complete directed cost matrix assumed.</p><pre class="code" id="code5">#include &lt;stdio.h&gt;
 #define INF 99999
 #define MAX 12
 int cost[MAX][MAX], dp[1 &lt;&lt; MAX][MAX], n;
@@ -227,7 +227,36 @@ int main()
 0 10 15 20
 10 0 35 25
 15 35 0 30
-20 25 30 0</pre></div><div><strong>Expected output</strong><pre>Minimum tour cost = 80</pre></div></div></section><p class="footer">Prepared from the MVSR DAA Lab Manual. Programs are separate C files; compile each individually. Array-based programs use small classroom inputs.</p></main><script>async function copyCode(id,btn){await navigator.clipboard.writeText(document.getElementById(id).textContent);const old=btn.textContent;btn.textContent='Copied!';setTimeout(()=>btn.textContent=old,1300)}async function copyAll(btn){let t=[...document.querySelectorAll('.code')].map((e,i)=>'/* PROGRAM '+(i+1)+' */
-'+e.textContent).join('
+20 25 30 0</pre></div><div><strong>Expected output</strong><pre>Minimum tour cost = 80</pre></div></div></section><p class="footer">Prepared from the MVSR DAA Lab Manual. Programs are separate C files; compile each individually. Array-based programs use small classroom inputs.</p></main><script>
+const copyResetTimers = new WeakMap();
 
-');await navigator.clipboard.writeText(t);btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy all',1300)}</script></body></html>
+async function copyText(text, btn) {
+    const originalLabel = btn.dataset.copyLabel || btn.textContent;
+    btn.dataset.copyLabel = originalLabel;
+    clearTimeout(copyResetTimers.get(btn));
+    btn.disabled = true;
+
+    try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = 'Copied!';
+    } catch (error) {
+        btn.textContent = 'Copy failed';
+    } finally {
+        btn.disabled = false;
+        copyResetTimers.set(btn, setTimeout(() => {
+            btn.textContent = originalLabel;
+        }, 2000));
+    }
+}
+
+function copyCode(id, btn) {
+    return copyText(document.getElementById(id).textContent, btn);
+}
+
+function copyAll(btn) {
+    const text = [...document.querySelectorAll('.code')]
+        .map((element, index) => '/* PROGRAM ' + (index + 1) + ' */\n' + element.textContent)
+        .join('\n\n');
+    return copyText(text, btn);
+}
+</script></body></html>
