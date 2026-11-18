@@ -1,35 +1,52 @@
 #include <stdio.h>
-#define INF 99999
-#define MAX 12
-int cost[MAX][MAX], dp[1 << MAX][MAX], n;
-int tsp(int mask, int pos)
+#define MAX 20
+int a[MAX][MAX], color[MAX], n, m, count = 0;
+
+int safe(int vertex, int c)
 {
-    int city, ans = INF, val;
-    if(mask == (1 << n) - 1)
-        return cost[pos][0];
-    if(dp[mask][pos] != -1)
-        return dp[mask][pos];
-    for(city = 0; city < n; city++)
-        if(!(mask & (1 << city)))
-        {
-            val = cost[pos][city] + tsp(mask | (1 << city), city);
-            if(val < ans) ans = val;
-        }
-    return dp[mask][pos] = ans;
+    int i;
+    if(a[vertex][vertex]) return 0;
+    for(i = 1; i <= n; i++)
+        if(a[vertex][i] && color[i] == c)
+            return 0;
+    return 1;
 }
+
+void coloring(int vertex)
+{
+    int c, i;
+    if(vertex > n)
+    {
+        printf("Solution %d: ", ++count);
+        for(i = 1; i <= n; i++)
+            printf("%d ", color[i]);
+        printf("\n");
+        return;
+    }
+    for(c = 1; c <= m; c++)
+        if(safe(vertex, c))
+        {
+            color[vertex] = c;
+            coloring(vertex + 1);
+            color[vertex] = 0;
+        }
+}
+
 int main()
 {
-    int i, j, mask;
-    printf("Enter number of cities (2 to 11): ");
+    int i, j;
+    printf("Enter number of vertices: ");
     scanf("%d", &n);
-    if(n < 2 || n >= MAX) return 1;
-    printf("Enter cost matrix:\n");
-    for(i = 0; i < n; i++)
-        for(j = 0; j < n; j++)
-            scanf("%d", &cost[i][j]);
-    for(mask = 0; mask < (1 << n); mask++)
-        for(i = 0; i < n; i++)
-            dp[mask][i] = -1;
-    printf("Minimum tour cost = %d\n", tsp(1, 0));
+    if(n < 1 || n >= MAX) return 1;
+    printf("Enter adjacency matrix of undirected graph:\n");
+    for(i = 1; i <= n; i++)
+        for(j = 1; j <= n; j++)
+            scanf("%d", &a[i][j]);
+    printf("Enter number of colours: ");
+    scanf("%d", &m);
+    if(m < 1 || m >= MAX) return 1;
+    coloring(1);
+    if(count == 0) printf("No colouring possible\n");
+    printf("Total solutions = %d\n", count);
     return 0;
 }

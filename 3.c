@@ -1,27 +1,43 @@
 #include <stdio.h>
-#define INF 99999
+#include <limits.h>
+#define MAX 12
+#define INF (LLONG_MAX / 4)
+long long cost[MAX][MAX], dp[1 << MAX][MAX];
+int n;
+
+long long tsp(int mask, int pos)
+{
+    int city;
+    long long ans = INF, value;
+    if(mask == (1 << n) - 1)
+        return cost[pos][0];
+    if(dp[mask][pos] != -1)
+        return dp[mask][pos];
+    for(city = 0; city < n; city++)
+        if(!(mask & (1 << city)))
+        {
+            value = cost[pos][city] + tsp(mask | (1 << city), city);
+            if(value < ans) ans = value;
+        }
+    return dp[mask][pos] = ans;
+}
+
 int main()
 {
-    int p[20][20], n, i, j, k;
-    printf("Enter number of vertices: ");
+    int i, j, mask;
+    printf("Enter number of cities (2 to 12): ");
     scanf("%d", &n);
-    printf("Enter cost matrix (99999 for no edge):\n");
-    for(i = 1; i <= n; i++)
-        for(j = 1; j <= n; j++)
-            scanf("%d", &p[i][j]);
-    for(k = 1; k <= n; k++)
-        for(i = 1; i <= n; i++)
-            for(j = 1; j <= n; j++)
-                if(p[i][k] != INF && p[k][j] != INF &&
-                   p[i][k] + p[k][j] < p[i][j])
-                    p[i][j] = p[i][k] + p[k][j];
-    printf("All-pairs shortest distances:\n");
-    for(i = 1; i <= n; i++)
-    {
-        for(j = 1; j <= n; j++)
-            if(p[i][j] == INF) printf("INF ");
-            else printf("%d ", p[i][j]);
-        printf("\n");
-    }
+    if(n < 2 || n > MAX) return 1;
+    printf("Enter complete cost matrix:\n");
+    for(i = 0; i < n; i++)
+        for(j = 0; j < n; j++)
+        {
+            scanf("%lld", &cost[i][j]);
+            if(cost[i][j] < 0 || cost[i][j] > 1000000000) return 1;
+        }
+    for(mask = 0; mask < (1 << n); mask++)
+        for(i = 0; i < n; i++)
+            dp[mask][i] = -1;
+    printf("Minimum tour cost = %lld\n", tsp(1, 0));
     return 0;
 }

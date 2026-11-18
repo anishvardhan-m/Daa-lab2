@@ -1,56 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DAA Lab Programs — Internal-2</title><style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#0b1020;color:#e5eaf5;font:15px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:1040px;margin:auto;padding:36px 18px}h1{font-size:clamp(28px,5vw,44px);margin:0}h2{font-size:22px;margin:0}p{color:#aab6cd}.subtitle{margin:4px 0 25px}.nav{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 30px}.nav a,.btn{background:#1b2945;color:#e8f1ff;border:1px solid #344766;border-radius:9px;padding:9px 12px;text-decoration:none;cursor:pointer;font:inherit}.nav a:hover,.btn:hover{background:#2b4066}.program{background:#111a2d;border:1px solid #2b3b55;border-radius:16px;padding:22px;margin:22px 0}.heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.code{background:#080d18;color:#cde8e3;border:1px solid #26344a;border-radius:10px;padding:16px;overflow:auto;max-height:620px;font:13px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre;tab-size:4}.examples{display:grid;grid-template-columns:1fr 1fr;gap:14px}.examples pre{background:#080d18;border-radius:9px;padding:13px;overflow:auto;font-size:12px;white-space:pre-wrap}.tag{font-size:12px;color:#91a6c9}.footer{margin:35px 0;color:#8291aa}@media(max-width:650px){.examples{grid-template-columns:1fr}.program{padding:14px}.wrap{padding:24px 12px}}</style></head><body><main class="wrap"><h1>DAA Lab Programs</h1><p class="subtitle">PC653CS · Internal-2 · 5 programs in C</p><button class="btn" aria-live="polite" onclick="copyAll(this)">Copy all</button><nav class="nav"><a href="#p1">1) Topological Sorting</a><a href="#p2">2) Dijkstra&#x27;s Algorithm</a><a href="#p3">3) Floyd&#x27;s Algorithm</a><a href="#p4">4) N-Queens using Backtracking</a><a href="#p5">5) Travelling Salesperson (TSP) using DP</a></nav><section class="program" id="p1"><div class="heading"><h2>1) Topological Sorting</h2><button class="btn" aria-live="polite" onclick="copyCode('code1',this)">Copy</button></div><p class="tag">Lab manual pp. 9–11; cycle detection added.</p><pre class="code" id="code1">#include &lt;stdio.h&gt;
-int a[20][20], n, indegree[20];
-
-void topology()
-{
-    int i, j, u, v, s[20], t[20], top = -1, k = 0;
-    for(j = 1; j &lt;= n; j++)
-    {
-        indegree[j] = 0;
-        for(i = 1; i &lt;= n; i++)
-            indegree[j] += a[i][j];
-    }
-    for(i = 1; i &lt;= n; i++)
-        if(indegree[i] == 0)
-            s[++top] = i;
-    while(top != -1)
-    {
-        u = s[top--];
-        t[k++] = u;
-        for(v = 1; v &lt;= n; v++)
-            if(a[u][v] == 1)
-            {
-                indegree[v]--;
-                if(indegree[v] == 0)
-                    s[++top] = v;
-            }
-    }
-    if(k != n)
-        printf(&quot;Graph contains a cycle\n&quot;);
-    else
-    {
-        printf(&quot;Topological sequence:\n&quot;);
-        for(i = 0; i &lt; n; i++)
-            printf(&quot;%d &quot;, t[i]);
-    }
-}
-int main()
-{
-    int i, j;
-    printf(&quot;Enter number of vertices: &quot;);
-    scanf(&quot;%d&quot;, &amp;n);
-    printf(&quot;Enter adjacency matrix:\n&quot;);
-    for(i = 1; i &lt;= n; i++)
-        for(j = 1; j &lt;= n; j++)
-            scanf(&quot;%d&quot;, &amp;a[i][j]);
-    topology();
-    return 0;
-}</pre><div class="examples"><div><strong>Sample input</strong><pre>4
-0 1 1 0
-0 0 0 1
-0 0 0 1
-0 0 0 0</pre></div><div><strong>Expected output</strong><pre>Topological sequence:
-1 3 2 4</pre></div></div></section><section class="program" id="p2"><div class="heading"><h2>2) Dijkstra&#x27;s Algorithm</h2><button class="btn" aria-live="polite" onclick="copyCode('code2',this)">Copy</button></div><p class="tag">Lab manual pp. 14–16; corrected source initialization and disconnected graph handling. Nonnegative weights only.</p><pre class="code" id="code2">#include &lt;stdio.h&gt;
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DAA Lab Programs — Internal-2</title><style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#0b1020;color:#e5eaf5;font:15px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:1040px;margin:auto;padding:36px 18px}h1{font-size:clamp(28px,5vw,44px);margin:0}h2{font-size:22px;margin:0}p{color:#aab6cd}.subtitle{margin:4px 0 25px}.nav{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 30px}.nav a,.btn{background:#1b2945;color:#e8f1ff;border:1px solid #344766;border-radius:9px;padding:9px 12px;text-decoration:none;cursor:pointer;font:inherit}.nav a:hover,.btn:hover{background:#2b4066}.program{background:#111a2d;border:1px solid #2b3b55;border-radius:16px;padding:22px;margin:22px 0}.heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.code{background:#080d18;color:#cde8e3;border:1px solid #26344a;border-radius:10px;padding:16px;overflow:auto;max-height:620px;font:13px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre;tab-size:4}.examples{display:grid;grid-template-columns:1fr 1fr;gap:14px}.examples pre{background:#080d18;border-radius:9px;padding:13px;overflow:auto;font-size:12px;white-space:pre-wrap}.tag{font-size:12px;color:#91a6c9}.footer{margin:35px 0;color:#8291aa}@media(max-width:650px){.examples{grid-template-columns:1fr}.program{padding:14px}.wrap{padding:24px 12px}}</style></head><body><main class="wrap"><h1>DAA Lab Programs</h1><p class="subtitle">PC653CS · Internal-2 · 6 questions · 7 C programs</p><button class="btn" aria-live="polite" onclick="copyAll(this)">Copy all</button><nav class="nav"><a href="#p1">1) Single Source Shortest Path</a><a href="#p2">2) All Pairs Shortest Path</a><a href="#p3">3) Travelling Salesman</a><a href="#p4">4) N-Queens</a><a href="#p5">5) M-Colouring</a><a href="#p6">6) Hamiltonian Cycle</a></nav><section class="program" id="p1"><h2>1) Single Source Shortest Path</h2><div class="heading"><h3>Dijkstra&#x27;s Algorithm</h3><button class="btn" aria-live="polite" onclick="copyCode('code1',this)">Copy</button></div><p class="tag">Nonnegative weights; 0 means no edge. Vertices numbered 1 to n (maximum 19). Use small integer weights; finite distances must be less than 99999.</p><pre class="code" id="code1">#include &lt;stdio.h&gt;
 #define INF 99999
 int main()
 {
@@ -58,6 +6,7 @@ int main()
     int n, v, i, j, u, min, count;
     printf(&quot;Enter number of vertices: &quot;);
     scanf(&quot;%d&quot;, &amp;n);
+    if(n &lt; 1 || n &gt;= 20) return 1;
     printf(&quot;Enter cost matrix (0 for no edge):\n&quot;);
     for(i = 1; i &lt;= n; i++)
         for(j = 1; j &lt;= n; j++)
@@ -68,6 +17,7 @@ int main()
         }
     printf(&quot;Enter source vertex: &quot;);
     scanf(&quot;%d&quot;, &amp;v);
+    if(v &lt; 1 || v &gt; n) return 1;
     for(i = 1; i &lt;= n; i++)
         dist[i] = cost[v][i];
     dist[v] = 0;
@@ -101,16 +51,17 @@ int main()
 2 0 3 0
 0 3 0 1
 7 0 1 0
-1</pre></div><div><strong>Expected output</strong><pre>Shortest distances:
+1</pre></div><div><strong>Expected output (after prompts)</strong><pre>Shortest distances:
 1 -&gt; 2: 2
 1 -&gt; 3: 5
-1 -&gt; 4: 6</pre></div></div></section><section class="program" id="p3"><div class="heading"><h2>3) Floyd&#x27;s Algorithm</h2><button class="btn" aria-live="polite" onclick="copyCode('code3',this)">Copy</button></div><p class="tag">Lab manual pp. 20–22; simplified matrix input, same Floyd recurrence.</p><pre class="code" id="code3">#include &lt;stdio.h&gt;
+1 -&gt; 4: 6</pre></div></div></section><section class="program" id="p2"><h2>2) All Pairs Shortest Path</h2><div class="heading"><h3>Floyd&#x27;s Algorithm</h3><button class="btn" aria-live="polite" onclick="copyCode('code2',this)">Copy</button></div><p class="tag">Use 99999 for no edge and 0 on the diagonal. Maximum 19 vertices. Small integer weights; finite distances must be less than 99999. No negative cycles.</p><pre class="code" id="code2">#include &lt;stdio.h&gt;
 #define INF 99999
 int main()
 {
     int p[20][20], n, i, j, k;
     printf(&quot;Enter number of vertices: &quot;);
     scanf(&quot;%d&quot;, &amp;n);
+    if(n &lt; 1 || n &gt;= 20) return 1;
     printf(&quot;Enter cost matrix (99999 for no edge):\n&quot;);
     for(i = 1; i &lt;= n; i++)
         for(j = 1; j &lt;= n; j++)
@@ -133,10 +84,101 @@ int main()
 }</pre><div class="examples"><div><strong>Sample input</strong><pre>3
 0 4 11
 99999 0 2
-3 99999 0</pre></div><div><strong>Expected output</strong><pre>All-pairs shortest distances:
+3 99999 0</pre></div><div><strong>Expected output (after prompts)</strong><pre>All-pairs shortest distances:
 0 4 6
 5 0 2
-3 7 0</pre></div></div></section><section class="program" id="p4"><div class="heading"><h2>4) N-Queens using Backtracking</h2><button class="btn" aria-live="polite" onclick="copyCode('code4',this)">Copy</button></div><p class="tag">Lab manual pp. 6–7; equivalent formatted version.</p><pre class="code" id="code4">#include &lt;stdio.h&gt;
+3 7 0</pre></div></div></section><section class="program" id="p3"><h2>3) Travelling Salesman</h2><div class="heading"><h3>A) Dynamic Programming</h3><button class="btn" aria-live="polite" onclick="copyCode('code3dp',this)">Copy</button></div><p class="tag">Bitmask DP; O(n² × 2ⁿ) time. Complete cost matrix, 2–12 cities, costs 0–1000000000. Starts and ends at city 0.</p><pre class="code" id="code3dp">#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+#define MAX 12
+#define INF (LLONG_MAX / 4)
+long long cost[MAX][MAX], dp[1 &lt;&lt; MAX][MAX];
+int n;
+
+long long tsp(int mask, int pos)
+{
+    int city;
+    long long ans = INF, value;
+    if(mask == (1 &lt;&lt; n) - 1)
+        return cost[pos][0];
+    if(dp[mask][pos] != -1)
+        return dp[mask][pos];
+    for(city = 0; city &lt; n; city++)
+        if(!(mask &amp; (1 &lt;&lt; city)))
+        {
+            value = cost[pos][city] + tsp(mask | (1 &lt;&lt; city), city);
+            if(value &lt; ans) ans = value;
+        }
+    return dp[mask][pos] = ans;
+}
+
+int main()
+{
+    int i, j, mask;
+    printf(&quot;Enter number of cities (2 to 12): &quot;);
+    scanf(&quot;%d&quot;, &amp;n);
+    if(n &lt; 2 || n &gt; MAX) return 1;
+    printf(&quot;Enter complete cost matrix:\n&quot;);
+    for(i = 0; i &lt; n; i++)
+        for(j = 0; j &lt; n; j++)
+        {
+            scanf(&quot;%lld&quot;, &amp;cost[i][j]);
+            if(cost[i][j] &lt; 0 || cost[i][j] &gt; 1000000000) return 1;
+        }
+    for(mask = 0; mask &lt; (1 &lt;&lt; n); mask++)
+        for(i = 0; i &lt; n; i++)
+            dp[mask][i] = -1;
+    printf(&quot;Minimum tour cost = %lld\n&quot;, tsp(1, 0));
+    return 0;
+}</pre><div class="examples"><div><strong>Sample input</strong><pre>4
+0 10 15 20
+10 0 35 25
+15 35 0 30
+20 25 30 0</pre></div><div><strong>Expected output (after prompts)</strong><pre>Minimum tour cost = 80</pre></div></div><div class="heading"><h3>B) Brute Force</h3><button class="btn" aria-live="polite" onclick="copyCode('code3brute',this)">Copy</button></div><p class="tag">Enumerates every ordering of the remaining cities; O(n!) time. Complete cost matrix, 2–10 cities, costs 0–1000000000. Starts and ends at city 0.</p><pre class="code" id="code3brute">#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+#define MAX 10
+long long cost[MAX][MAX], best = LLONG_MAX;
+int n, visited[MAX];
+
+void tsp(int pos, int count, long long total)
+{
+    int city;
+    if(count == n)
+    {
+        total += cost[pos][0];
+        if(total &lt; best) best = total;
+        return;
+    }
+    for(city = 1; city &lt; n; city++)
+        if(!visited[city])
+        {
+            visited[city] = 1;
+            tsp(city, count + 1, total + cost[pos][city]);
+            visited[city] = 0;
+        }
+}
+
+int main()
+{
+    int i, j;
+    printf(&quot;Enter number of cities (2 to 10): &quot;);
+    scanf(&quot;%d&quot;, &amp;n);
+    if(n &lt; 2 || n &gt; MAX) return 1;
+    printf(&quot;Enter complete cost matrix:\n&quot;);
+    for(i = 0; i &lt; n; i++)
+        for(j = 0; j &lt; n; j++)
+        {
+            scanf(&quot;%lld&quot;, &amp;cost[i][j]);
+            if(cost[i][j] &lt; 0 || cost[i][j] &gt; 1000000000) return 1;
+        }
+    visited[0] = 1;
+    tsp(0, 1, 0);
+    printf(&quot;Minimum tour cost = %lld\n&quot;, best);
+    return 0;
+}</pre><div class="examples"><div><strong>Sample input</strong><pre>4
+0 10 15 20
+10 0 35 25
+15 35 0 30
+20 25 30 0</pre></div><div><strong>Expected output (after prompts)</strong><pre>Minimum tour cost = 80</pre></div></div></section><section class="program" id="p4"><h2>4) N-Queens</h2><div class="heading"><h3>Backtracking</h3><button class="btn" aria-live="polite" onclick="copyCode('code4',this)">Copy</button></div><p class="tag">Prints every valid arrangement. Q denotes a queen; * denotes an empty square. Use a small positive n (maximum 19).</p><pre class="code" id="code4">#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 int x[20], count = 0;
 int place(int k, int i)
@@ -174,10 +216,11 @@ int main()
     int n;
     printf(&quot;Enter number of queens: &quot;);
     scanf(&quot;%d&quot;, &amp;n);
+    if(n &lt; 1 || n &gt;= 20) return 1;
     queen(1, n);
     printf(&quot;\nTotal solutions = %d\n&quot;, count);
     return 0;
-}</pre><div class="examples"><div><strong>Sample input</strong><pre>4</pre></div><div><strong>Expected output</strong><pre>Solution 1:
+}</pre><div class="examples"><div><strong>Sample input</strong><pre>4</pre></div><div><strong>Expected output (after prompts)</strong><pre>Solution 1:
 * Q * *
 * * * Q
 Q * * *
@@ -189,45 +232,121 @@ Q * * *
 * * * Q
 * Q * *
 
-Total solutions = 2</pre></div></div></section><section class="program" id="p5"><div class="heading"><h2>5) Travelling Salesperson (TSP) using DP</h2><button class="btn" aria-live="polite" onclick="copyCode('code5',this)">Copy</button></div><p class="tag">Supplemental implementation: manual p. 24 lists TSP but does not provide code. Complete directed cost matrix assumed.</p><pre class="code" id="code5">#include &lt;stdio.h&gt;
-#define INF 99999
-#define MAX 12
-int cost[MAX][MAX], dp[1 &lt;&lt; MAX][MAX], n;
-int tsp(int mask, int pos)
+Total solutions = 2</pre></div></div></section><section class="program" id="p5"><h2>5) M-Colouring</h2><div class="heading"><h3>Backtracking</h3><button class="btn" aria-live="polite" onclick="copyCode('code5',this)">Copy</button></div><p class="tag">Prints all valid colour assignments using colours 1 to m. Enter a symmetric 0/1 adjacency matrix for an undirected graph. Maximum 19 vertices and 19 colours; use small inputs.</p><pre class="code" id="code5">#include &lt;stdio.h&gt;
+#define MAX 20
+int a[MAX][MAX], color[MAX], n, m, count = 0;
+
+int safe(int vertex, int c)
 {
-    int city, ans = INF, val;
-    if(mask == (1 &lt;&lt; n) - 1)
-        return cost[pos][0];
-    if(dp[mask][pos] != -1)
-        return dp[mask][pos];
-    for(city = 0; city &lt; n; city++)
-        if(!(mask &amp; (1 &lt;&lt; city)))
-        {
-            val = cost[pos][city] + tsp(mask | (1 &lt;&lt; city), city);
-            if(val &lt; ans) ans = val;
-        }
-    return dp[mask][pos] = ans;
+    int i;
+    if(a[vertex][vertex]) return 0;
+    for(i = 1; i &lt;= n; i++)
+        if(a[vertex][i] &amp;&amp; color[i] == c)
+            return 0;
+    return 1;
 }
+
+void coloring(int vertex)
+{
+    int c, i;
+    if(vertex &gt; n)
+    {
+        printf(&quot;Solution %d: &quot;, ++count);
+        for(i = 1; i &lt;= n; i++)
+            printf(&quot;%d &quot;, color[i]);
+        printf(&quot;\n&quot;);
+        return;
+    }
+    for(c = 1; c &lt;= m; c++)
+        if(safe(vertex, c))
+        {
+            color[vertex] = c;
+            coloring(vertex + 1);
+            color[vertex] = 0;
+        }
+}
+
 int main()
 {
-    int i, j, mask;
-    printf(&quot;Enter number of cities (2 to 11): &quot;);
+    int i, j;
+    printf(&quot;Enter number of vertices: &quot;);
     scanf(&quot;%d&quot;, &amp;n);
-    if(n &lt; 2 || n &gt;= MAX) return 1;
-    printf(&quot;Enter cost matrix:\n&quot;);
-    for(i = 0; i &lt; n; i++)
-        for(j = 0; j &lt; n; j++)
-            scanf(&quot;%d&quot;, &amp;cost[i][j]);
-    for(mask = 0; mask &lt; (1 &lt;&lt; n); mask++)
-        for(i = 0; i &lt; n; i++)
-            dp[mask][i] = -1;
-    printf(&quot;Minimum tour cost = %d\n&quot;, tsp(1, 0));
+    if(n &lt; 1 || n &gt;= MAX) return 1;
+    printf(&quot;Enter adjacency matrix of undirected graph:\n&quot;);
+    for(i = 1; i &lt;= n; i++)
+        for(j = 1; j &lt;= n; j++)
+            scanf(&quot;%d&quot;, &amp;a[i][j]);
+    printf(&quot;Enter number of colours: &quot;);
+    scanf(&quot;%d&quot;, &amp;m);
+    if(m &lt; 1 || m &gt;= MAX) return 1;
+    coloring(1);
+    if(count == 0) printf(&quot;No colouring possible\n&quot;);
+    printf(&quot;Total solutions = %d\n&quot;, count);
+    return 0;
+}</pre><div class="examples"><div><strong>Sample input</strong><pre>3
+0 1 1
+1 0 1
+1 1 0
+3</pre></div><div><strong>Expected output (after prompts)</strong><pre>Solution 1: 1 2 3
+Solution 2: 1 3 2
+Solution 3: 2 1 3
+Solution 4: 2 3 1
+Solution 5: 3 1 2
+Solution 6: 3 2 1
+Total solutions = 6</pre></div></div></section><section class="program" id="p6"><h2>6) Hamiltonian Cycle</h2><div class="heading"><h3>Backtracking</h3><button class="btn" aria-live="polite" onclick="copyCode('code6',this)">Copy</button></div><p class="tag">Prints one cycle starting and ending at vertex 1, visiting every vertex exactly once. Enter a symmetric 0/1 adjacency matrix for an undirected graph; 3–19 vertices.</p><pre class="code" id="code6">#include &lt;stdio.h&gt;
+#define MAX 20
+int a[MAX][MAX], path[MAX], n;
+
+int safe(int vertex, int pos)
+{
+    int i;
+    if(!a[path[pos - 1]][vertex]) return 0;
+    for(i = 1; i &lt; pos; i++)
+        if(path[i] == vertex) return 0;
+    return 1;
+}
+
+int hamiltonian(int pos)
+{
+    int vertex;
+    if(pos &gt; n)
+        return a[path[n]][path[1]] != 0;
+    for(vertex = 2; vertex &lt;= n; vertex++)
+        if(safe(vertex, pos))
+        {
+            path[pos] = vertex;
+            if(hamiltonian(pos + 1)) return 1;
+            path[pos] = 0;
+        }
+    return 0;
+}
+
+int main()
+{
+    int i, j;
+    printf(&quot;Enter number of vertices: &quot;);
+    scanf(&quot;%d&quot;, &amp;n);
+    if(n &lt; 3 || n &gt;= MAX) return 1;
+    printf(&quot;Enter adjacency matrix of undirected graph:\n&quot;);
+    for(i = 1; i &lt;= n; i++)
+        for(j = 1; j &lt;= n; j++)
+            scanf(&quot;%d&quot;, &amp;a[i][j]);
+    path[1] = 1;
+    if(hamiltonian(2))
+    {
+        printf(&quot;Hamiltonian cycle: &quot;);
+        for(i = 1; i &lt;= n; i++)
+            printf(&quot;%d &quot;, path[i]);
+        printf(&quot;%d\n&quot;, path[1]);
+    }
+    else
+        printf(&quot;No Hamiltonian cycle\n&quot;);
     return 0;
 }</pre><div class="examples"><div><strong>Sample input</strong><pre>4
-0 10 15 20
-10 0 35 25
-15 35 0 30
-20 25 30 0</pre></div><div><strong>Expected output</strong><pre>Minimum tour cost = 80</pre></div></div></section><p class="footer">Prepared from the MVSR DAA Lab Manual. Programs are separate C files; compile each individually. Array-based programs use small classroom inputs.</p></main><script>
+0 1 0 1
+1 0 1 0
+0 1 0 1
+1 0 1 0</pre></div><div><strong>Expected output (after prompts)</strong><pre>Hamiltonian cycle: 1 2 3 4 1</pre></div></div></section><p class="footer">Each code block is a separate C program; compile and run it individually. Use small classroom inputs for exhaustive backtracking programs.</p></main><script>
 const copyResetTimers = new WeakMap();
 
 async function copyText(text, btn) {

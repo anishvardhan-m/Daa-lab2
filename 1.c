@@ -1,48 +1,49 @@
 #include <stdio.h>
-int a[20][20], n, indegree[20];
-
-void topology()
-{
-    int i, j, u, v, s[20], t[20], top = -1, k = 0;
-    for(j = 1; j <= n; j++)
-    {
-        indegree[j] = 0;
-        for(i = 1; i <= n; i++)
-            indegree[j] += a[i][j];
-    }
-    for(i = 1; i <= n; i++)
-        if(indegree[i] == 0)
-            s[++top] = i;
-    while(top != -1)
-    {
-        u = s[top--];
-        t[k++] = u;
-        for(v = 1; v <= n; v++)
-            if(a[u][v] == 1)
-            {
-                indegree[v]--;
-                if(indegree[v] == 0)
-                    s[++top] = v;
-            }
-    }
-    if(k != n)
-        printf("Graph contains a cycle\n");
-    else
-    {
-        printf("Topological sequence:\n");
-        for(i = 0; i < n; i++)
-            printf("%d ", t[i]);
-    }
-}
+#define INF 99999
 int main()
 {
-    int i, j;
+    int cost[20][20], dist[20], visited[20] = {0};
+    int n, v, i, j, u, min, count;
     printf("Enter number of vertices: ");
     scanf("%d", &n);
-    printf("Enter adjacency matrix:\n");
+    if(n < 1 || n >= 20) return 1;
+    printf("Enter cost matrix (0 for no edge):\n");
     for(i = 1; i <= n; i++)
         for(j = 1; j <= n; j++)
-            scanf("%d", &a[i][j]);
-    topology();
+        {
+            scanf("%d", &cost[i][j]);
+            if(i != j && cost[i][j] == 0)
+                cost[i][j] = INF;
+        }
+    printf("Enter source vertex: ");
+    scanf("%d", &v);
+    if(v < 1 || v > n) return 1;
+    for(i = 1; i <= n; i++)
+        dist[i] = cost[v][i];
+    dist[v] = 0;
+    visited[v] = 1;
+    for(count = 1; count < n; count++)
+    {
+        min = INF;
+        u = -1;
+        for(i = 1; i <= n; i++)
+            if(!visited[i] && dist[i] < min)
+            {
+                min = dist[i];
+                u = i;
+            }
+        if(u == -1) break;
+        visited[u] = 1;
+        for(i = 1; i <= n; i++)
+            if(!visited[i] && dist[u] + cost[u][i] < dist[i])
+                dist[i] = dist[u] + cost[u][i];
+    }
+    printf("Shortest distances:\n");
+    for(i = 1; i <= n; i++)
+        if(i != v)
+        {
+            if(dist[i] == INF) printf("%d -> %d: unreachable\n", v, i);
+            else printf("%d -> %d: %d\n", v, i, dist[i]);
+        }
     return 0;
 }

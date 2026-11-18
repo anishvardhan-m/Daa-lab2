@@ -36,6 +36,7 @@ int main()
     int n;
     printf("Enter number of queens: ");
     scanf("%d", &n);
+    if(n < 1 || n >= 20) return 1;
     queen(1, n);
     printf("\nTotal solutions = %d\n", count);
     return 0;
